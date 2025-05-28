@@ -32,7 +32,7 @@
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/Sumit0ubey/POST-WebApp.git
-   cd POST-WebApp
+   cd PostWebApp
    ```
 
 2. **Create a virtual environment**:
