@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %} Signup {% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f9f9f9;
+        color: #333;
+    }
+
+    .info-panel, .form-panel {
+        background-color: #ffffff;
+        color: #333;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control {
+        background-color: #ffffff;
+        color: #333;
+        border: 1px solid #ccc;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .btn-green {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: 500;
+    }
+
+    .btn-green:hover {
+        background-color: #218838;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        body {
+            background-color: #0e1117;
+            color: #c9d1d9;
+        }
+
+        .info-panel, .form-panel {
+            background-color: #161b22;
+            color: #c9d1d9;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .form-control {
+            background-color: #0d1117;
+            color: #f0f6fc;
+            border: 1px solid #30363d;
+        }
+
+        .form-control:focus {
+            border-color: #238636;
+            box-shadow: 0 0 0 0.2rem rgba(34, 197, 94, 0.25);
+        }
+
+        .btn-green {
+            background-color: #2ea043;
+            color: white;
+        }
+
+        .btn-green:hover {
+            background-color: #238636;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .info-panel, .form-panel {
+            margin-bottom: 1rem;
+        }
+
+        .col-lg-6 {
+            max-width: 100%;
+        }
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .col-12 {
+        flex: 1;
+    }
+
+    .col-lg-6 {
+        flex: 1 0 48%;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12 col-lg-6 mb-4 mb-lg-0">
+            <div class="info-panel p-4 rounded shadow-sm h-100">
+                <h2 class="fw-bold mb-3">Welcome to Post Web App!</h2>
+                <p>To create your account, please follow these guidelines:</p>
+                <ul class="mb-3">
+                    <li><strong>Name:</strong> Should be at least 2 characters long.</li>
+                    <li><strong>Email:</strong> Must be a valid format (e.g., <code>name@example.com</code>).</li>
+                    <li><strong>Phone Number:</strong> Enter a 10-digit mobile number (e.g., 9876543210).</li>
+                    <li><strong>Password:</strong>
+                        <ul>
+                            <li>At least 8 characters</li>
+                            <li>Include uppercase & lowercase letters</li>
+                            <li>Include numbers & symbols (e.g., <code>@, #, $</code>)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Confirm Password:</strong> Must match the password exactly.</li>
+                </ul>
+                <p class="text-muted"><small>Need help? Contact support after registering.</small></p>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="form-panel p-4 rounded shadow-sm">
+                <h2 class="fw-bold text-center mb-4">Sign Up</h2>
+                <form method="POST" novalidate action="{% url 'SignUp' %}">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-green w-100 mt-2">Sign Up</button>
+                </form>
+                <p class="text-center mt-3">Already registered? <a class="link-light" href="{% url 'Login' %}">Log in</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

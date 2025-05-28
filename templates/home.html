@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Post - let's share your thought{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="display-4 mb-3">Welcome to <strong>PostWebApp</strong> 📬</h1>
+    <p class="lead mb-4">
+        Your space to <strong>post, share, and discover</strong> all kinds of information — ideas, thoughts, questions, announcements, or just random musings.
+    </p>
+
+    <p class="mb-4">
+        Whether you're journaling your day, asking a question, starting a discussion, or dropping a meme — <strong>PostWebApp</strong> gives you the platform to express it.
+    </p>
+
+    {% if request.session.auth_token %}
+        <a href="{% url 'Profile' %}" class="btn btn-success btn-lg me-2">Dashboard</a>
+        <a href="{% url 'createPost' %}" class="btn btn-primary btn-lg">Create Post</a>
+    {% else %}
+        <a href="{% url 'SignUp' %}" class="btn btn-success btn-lg me-2">Get Started</a>
+        <a href="{% url 'Login' %}" class="btn btn-outline-primary btn-lg">Login</a>
+    {% endif %}
+</div>
+{% endblock %}

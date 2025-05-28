@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %} Contact Us {% endblock %}
+
+{% block content %}
+
+    <div class="form-panel p-4 rounded shadow-sm">
+            <h2 class="fw-bold text-center mb-4">Contact Us</h2>
+            <form method="POST" novalidate>
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary" style="margin-bottom:5px">Submit</button>
+            </form>
+    </div>
+
+{% endblock %}

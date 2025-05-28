@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f9f9f9;
+        color: #333;
+    }
+
+    .info-panel, .form-panel {
+        background-color: #ffffff;
+        color: #333;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control {
+        background-color: #ffffff;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .btn-green {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: 500;
+    }
+
+    .btn-green:hover {
+        background-color: #218838;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        body {
+            background-color: #0e1117;
+            color: #c9d1d9;
+        }
+
+        .info-panel, .form-panel {
+            background-color: #161b22;
+            color: #c9d1d9;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .form-control {
+            background-color: #0d1117;
+            color: #f0f6fc;
+            border: 1px solid #30363d;
+        }
+
+        .form-control:focus {
+            border-color: #238636;
+            box-shadow: 0 0 0 0.2rem rgba(34, 197, 94, 0.25);
+        }
+
+        .btn-green {
+            background-color: #2ea043;
+            color: white;
+        }
+
+        .btn-green:hover {
+            background-color: #238636;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .info-panel, .form-panel {
+            margin-bottom: 1rem;
+        }
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row g-4">
+        <div class="col-12 col-lg-6">
+            <div class="info-panel h-100">
+                <h2 class="fw-bold mb-3">Welcome Back!</h2>
+                <p>To log in to your account:</p>
+                <ul class="mb-3">
+                    <li><strong>Username:</strong> Enter the email you used to sign up.</li>
+                    <li><strong>Password:</strong> Make sure you enter it correctly. It’s case sensitive.</li>
+                    <li><strong>Remember Me:</strong> Optionally, keep your session logged in.</li>
+                </ul>
+                <p class="text-muted"><small>Forgot your password? Use the reset link on the login form.</small></p>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="form-panel">
+                <h2 class="fw-bold text-center mb-4">Login</h2>
+                <form method="POST" action="{% url 'Login' %}">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="{{ form.username.id_for_label }}" class="form-label fw-semibold">Username</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="text-danger small mt-1">{{ form.username.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.password.id_for_label }}" class="form-label fw-semibold">Password</label>
+                        {{ form.password }}
+                        {% if form.password.errors %}
+                            <div class="text-danger small mt-1">{{ form.password.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+
+                    {% if form.remember_me %}
+                    <div class="form-check mb-3">
+                        {{ form.remember_me }}
+                        <label class="form-check-label ms-2" for="{{ form.remember_me.id_for_label }}">Remember me</label>
+                    </div>
+                    {% endif %}
+
+                    <button type="submit" class="btn btn-green w-100 mt-2">Login</button>
+                </form>
+
+                <p class="text-center mt-3">
+                    New here? <a class="link-light" href="{% url 'SignUp' %}">Create an account</a><br>
+                    <a class="link-secondary small" href="#">Forgot password?</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

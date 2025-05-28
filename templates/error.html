@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Error{% endblock %}
+
+{% block content %}
+    {% if message %}
+        <div class="alert alert-danger text-center mt-5" role="alert">
+            {{ message }}
+        </div>
+        <form action="" method="POST" novalidate>
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary" style="alignment:center">Retry</button>
+        </form>
+    {% endif %}
+{% endblock %}

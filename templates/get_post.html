@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Post – {{ post.title|default:"Untitled Post"|truncatewords:5 }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    {% if post %}
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-body p-5">
+                <h2 class="card-title mb-3">{{ post.title }}</h2>
+                <h6 class="card-subtitle mb-4 text-muted">
+                    By <strong>{{ post.user }}</strong> &bull; {{ post.created_at }}
+                </h6>
+                <p class="card-text fs-5 mb-4">{{ post.content|linebreaksbr }}</p>
+
+                <div class="d-flex align-items-center">
+                    <form method="POST" action="{% url 'Like' post.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="like_value" value="1" >
+                        <button type="submit" class="btn btn-outline-danger me-2">
+                            ❤️ Like
+                        </button>
+                    </form>
+                    <span class="text-muted">{{ post.likes }} {{ post.likes|pluralize:"like,likes" }}</span>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center mt-5 shadow-sm rounded-3">
+            <h5 class="mb-3">No post available</h5>
+            <p>Be the first to share your thoughts!</p>
+            <a href="{% url 'createPost' %}" class="btn btn-primary">Create Post</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
